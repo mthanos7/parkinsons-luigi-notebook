@@ -1,0 +1,14 @@
+.env
+
+__pycache__/
+/luigi/
+/output/
+.ipynb_checkpoints
+/data/
+
+*.pyc
+*.log
+*.conf
+
+*.sublime-project
+*.sublime-workspace
