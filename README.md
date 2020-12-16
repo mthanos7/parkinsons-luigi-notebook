@@ -40,12 +40,12 @@ export LUIGI_CONFIG_PATH=/Users/mthanos7/Git/parkinsons-luigi-notebook/luigi/lui
 cd into the project repository and you're all set!
 
 ## Executing the notebooks into Luigi tasks using the JupyterNotebookClass
-Configure a Python 3 Jupyter kernel which we will name luigi_tutorial_py3. You can do this by executing:
+Configure a Python 3 Jupyter kernel which we will name luigi_notebook_py3. You can do this by executing:
 ```bash
 python -m ipykernel install --user --name luigi_notebook_py3
 ```
 
-Trigger the pipeline using the following command for producing a feature importance plot based on a random forest classification,
+Trigger the pipeline using the following command for producing a feature importance plot based on a random forest classification (this runs the Random Forest model with 50 trees using information gain/entropy as the splitting criterion, and limits to 3 the number of randomly sampled features that are used to determine the splits),
 ```bash
 luigi --module tasks ProducePlot --n-estimators 50 --criterion entropy --max-features 3
 ```
