@@ -1,9 +1,8 @@
 import os
 
 import luigi
-
-from util import get_config
 from jupyter_notebook import JupyterNotebookTask
+from util import get_config
 
 repo_path = get_config('paths', 'parkinsons-luigi-notebook')
 notebooks_path = os.path.join(repo_path, 'notebooks')
