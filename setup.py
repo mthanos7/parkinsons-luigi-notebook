@@ -8,11 +8,7 @@
 import os
 from textwrap import TextWrapper
 
-from util import (
-	write_section,
-	write_option,
-	get_script_name
-)
+from util import get_script_name, write_option, write_section
 
 max_chars_per_line = 100
 

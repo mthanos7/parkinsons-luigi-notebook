@@ -1,9 +1,8 @@
 import os
 
 import luigi
-
-from util import get_config
 from jupyter_notebook import JupyterNotebookTask
+from util import get_config
 
 repo_path = get_config('paths', 'parkinsons-luigi-notebook')
 notebooks_path = os.path.join(repo_path, 'notebooks')
@@ -12,11 +11,24 @@ output_path = os.path.join(repo_path, 'output')
 
 class PrepareData(JupyterNotebookTask):
     """
-    A notebook that produces synthetic classification data.
+    A notebook that prepares the data
+    (this involves removing columns and defining feature and label sets).
     """
-    notebook_path = os.path.join(notebooks_path, 'prepare_data.ipynb')
-    kernel_name = 'luigi_tutorial_py3'
-    timeout = 60
+    notebook_path = luigi.Parameter(
+        default=os.path.join(notebooks_path, 'prepare_data.ipynb')
+    )
+
+    kernel_name = luigi.Parameter(
+        default='luigi_notebook_py3'
+    )
+
+    timeout = luigi.Parameter(
+        default=60
+    )
+
+    #notebook_path = os.path.join(notebooks_path, 'prepare_data.ipynb')
+    #kernel_name = 'luigi_notebook_py3'
+    #timeout = 60
 
     def output(self):
         return luigi.LocalTarget(os.path.join(
@@ -26,10 +38,18 @@ class PrepareData(JupyterNotebookTask):
 
 class FitModel(JupyterNotebookTask):
     """
-    A notebook that fits a Random Forest classifier.
+    A notebook that fits a Random Forest classifier to the data.
     """
-    notebook_path = os.path.join(notebooks_path, 'fit_model.ipynb')
-    kernel_name = 'luigi_tutorial_py3'
+    notebook_path = luigi.Parameter(
+        default=os.path.join(notebooks_path, 'fit_model.ipynb')
+    )
+
+    kernel_name = luigi.Parameter(
+        default='luigi_notebook_py3'
+    )
+
+    #notebook_path = os.path.join(notebooks_path, 'fit_model.ipynb')
+    #kernel_name = 'luigi_notebook_py3'
 
     n_estimators = luigi.Parameter(
         default=200
@@ -56,14 +76,14 @@ class FitModel(JupyterNotebookTask):
 class ProducePlot(JupyterNotebookTask):
     """
     A notebook that produces a visualization about the Random Forest
-    classifier fit.
+    classifier fit for the data.
     """
     notebook_path = luigi.Parameter(
         default=os.path.join(notebooks_path, 'produce_plot.ipynb')
     )
 
     kernel_name = luigi.Parameter(
-        default='luigi_tutorial_py3'
+        default='luigi_notebook_py3 '
     )
 
     n_estimators = luigi.Parameter(
@@ -97,12 +117,25 @@ class ProducePlot(JupyterNotebookTask):
 
 class XGBPredict(JupyterNotebookTask):
     """
-    A notebook that produces a visualization about the Random Forest
-    classifier fit.
+    A notebook that builds a model to accurately detect the presence
+    of Parkinson’s disease in an individual.
+    Primary algorithm used is XGBoost. Writes the output to a .txt file
     """
-    notebook_path = os.path.join(notebooks_path, 'parkinsons_detection.ipynb')
-    kernel_name = 'luigi_tutorial_py3'
-    timeout = 60
+    notebook_path = luigi.Parameter(
+        default=os.path.join(notebooks_path, 'parkinsons_detection.ipynb')
+    )
+
+    kernel_name = luigi.Parameter(
+        default='luigi_notebook_py3'
+    )
+
+    timeout = luigi.Parameter(
+        default=60
+    )
+
+    #notebook_path = os.path.join(notebooks_path, 'parkinsons_detection.ipynb')
+    #kernel_name = 'luigi_tutorial_py3'
+    #timeout = 60
 
     def output(self):
         return luigi.LocalTarget(

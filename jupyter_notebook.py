@@ -96,17 +96,15 @@ import logging
 import os
 from datetime import datetime
 
-import luigi
 import six
+
+import luigi
 
 logger = logging.getLogger('luigi-interface')
 
 try:
     import nbformat
-    from nbconvert.preprocessors import (
-        CellExecutionError,
-        ExecutePreprocessor
-    )
+    from nbconvert.preprocessors import CellExecutionError, ExecutePreprocessor
 
 except ImportError:
     logger.warning('Loading jupyter_notebook module without nbconvert '

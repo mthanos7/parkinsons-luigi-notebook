@@ -1,10 +1,12 @@
 #
 # Some utilities
 #
-import __main__
 import os
 import sys
 from configparser import ConfigParser
+
+import __main__
+
 
 def write_section(section_name):
     """
