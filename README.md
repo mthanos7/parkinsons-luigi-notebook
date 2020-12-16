@@ -54,3 +54,40 @@ and for generating an accuracy score based on XGBoost,
 ```bash
 luigi --module tasks XGBPredict
 ```
+
+## Technology overview
+#### Pipeline
+- Git(hub) (for version control)
+- Jupyter (for notebook based data analysis)
+- Luigi (to execute notebook based tasks)
+- AWS (to download the data file)
+- cookiecutter (to set up directory)
+- pipenv (to isolate project in a virtual environment)
+
+#### Analysis
+- sklearn (RandomForestClassifier)
+- XGBoost
+- numpy
+- pandas
+- matplotlib
+- pickle
+
+# Pipeline overview
+### Notebooks (.ipynb)
+- prepare_data.ipynb: Notebook that cleans and organizes the dataset to be model-ready depending on intended analysis.
+- fit_model.ipynb: Fits the model to the data (random forest classifier in this project).
+- produce_plot.ipynb: Generates an output (a feature importance graph for this project).
+- parkinsons_detection.ipynb: Self contained notebook workflow that uses XGBoost to detect the presence of onset Parkinson's disease.
+
+### Luigi tasks (tasks.py)
+- PrepareData: outputs a CSV file named model_ready_data.csv with the model-ready data that we use to train the RandomForest classifier.
+- FitModel: add some parameters that are used in the notebook to control how we fit the Random Forest.
+- ProducePlot: Runs the random forest model and generates a feature importance plot.
+- XGBPredict: Runs the parkinsons_detection.ipynb notebook that contains the entire workflow based on XGBoost and writes to a xgb_predict_score.txt file.
+
+### Output
+- model_ready_data.csv: Output CSV of the model-ready data. 
+- model_fit.pkl: Saved .pkl model using pickle.
+- importances_plot.png: Output feature importance plot.
+- xgb_predict_score.txt: Output .txt of printed accuracy score with XGBoost
+
