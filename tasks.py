@@ -14,9 +14,21 @@ class PrepareData(JupyterNotebookTask):
     A notebook that prepares the data
     (this involves removing columns and defining feature and label sets).
     """
-    notebook_path = os.path.join(notebooks_path, 'prepare_data.ipynb')
-    kernel_name = 'luigi_notebook_py3 '
-    timeout = 60
+    notebook_path = luigi.Parameter(
+        default=os.path.join(notebooks_path, 'prepare_data.ipynb')
+    )
+
+    kernel_name = luigi.Parameter(
+        default='luigi_notebook_py3'
+    )
+
+    timeout = luigi.Parameter(
+        default=60
+    )
+
+    #notebook_path = os.path.join(notebooks_path, 'prepare_data.ipynb')
+    #kernel_name = 'luigi_notebook_py3'
+    #timeout = 60
 
     def output(self):
         return luigi.LocalTarget(os.path.join(
@@ -28,8 +40,16 @@ class FitModel(JupyterNotebookTask):
     """
     A notebook that fits a Random Forest classifier to the data.
     """
-    notebook_path = os.path.join(notebooks_path, 'fit_model.ipynb')
-    kernel_name = 'luigi_notebook_py3 '
+    notebook_path = luigi.Parameter(
+        default=os.path.join(notebooks_path, 'fit_model.ipynb')
+    )
+
+    kernel_name = luigi.Parameter(
+        default='luigi_notebook_py3'
+    )
+
+    #notebook_path = os.path.join(notebooks_path, 'fit_model.ipynb')
+    #kernel_name = 'luigi_notebook_py3'
 
     n_estimators = luigi.Parameter(
         default=200
@@ -97,12 +117,25 @@ class ProducePlot(JupyterNotebookTask):
 
 class XGBPredict(JupyterNotebookTask):
     """
-    A notebook that builds a model to accurately detect the presence of Parkinson’s disease in an individual.
+    A notebook that builds a model to accurately detect the presence
+    of Parkinson’s disease in an individual.
     Primary algorithm used is XGBoost. Writes the output to a .txt file
     """
-    notebook_path = os.path.join(notebooks_path, 'parkinsons_detection.ipynb')
-    kernel_name = 'luigi_tutorial_py3'
-    timeout = 60
+    notebook_path = luigi.Parameter(
+        default=os.path.join(notebooks_path, 'parkinsons_detection.ipynb')
+    )
+
+    kernel_name = luigi.Parameter(
+        default='luigi_notebook_py3'
+    )
+
+    timeout = luigi.Parameter(
+        default=60
+    )
+
+    #notebook_path = os.path.join(notebooks_path, 'parkinsons_detection.ipynb')
+    #kernel_name = 'luigi_tutorial_py3'
+    #timeout = 60
 
     def output(self):
         return luigi.LocalTarget(
