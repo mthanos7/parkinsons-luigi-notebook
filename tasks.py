@@ -26,10 +26,6 @@ class PrepareData(JupyterNotebookTask):
         default=60
     )
 
-    #notebook_path = os.path.join(notebooks_path, 'prepare_data.ipynb')
-    #kernel_name = 'luigi_notebook_py3'
-    #timeout = 60
-
     def output(self):
         return luigi.LocalTarget(os.path.join(
             output_path, 'model_ready_data.csv')
@@ -47,9 +43,6 @@ class FitModel(JupyterNotebookTask):
     kernel_name = luigi.Parameter(
         default='luigi_notebook_py3'
     )
-
-    #notebook_path = os.path.join(notebooks_path, 'fit_model.ipynb')
-    #kernel_name = 'luigi_notebook_py3'
 
     n_estimators = luigi.Parameter(
         default=200
@@ -132,10 +125,6 @@ class XGBPredict(JupyterNotebookTask):
     timeout = luigi.Parameter(
         default=60
     )
-
-    #notebook_path = os.path.join(notebooks_path, 'parkinsons_detection.ipynb')
-    #kernel_name = 'luigi_tutorial_py3'
-    #timeout = 60
 
     def output(self):
         return luigi.LocalTarget(
